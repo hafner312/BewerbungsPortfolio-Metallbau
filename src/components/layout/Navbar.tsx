@@ -4,7 +4,8 @@ import { motion, useScroll, useSpring } from 'framer-motion'
 
 const navLinks = [
   { label: '\u00dcber mich', href: '#about' },
-  { label: 'F\u00e4higkeiten', href: '#skills' },
+  { label: 'Metallbau', href: '#metallbau-skills' },
+  { label: 'IT-F\u00e4higkeiten', href: '#skills' },
   { label: 'Projekte', href: '#projects' },
   { label: 'Lebenslauf', href: '#timeline' },
   { label: 'Zeugnisse', href: '#references' },
