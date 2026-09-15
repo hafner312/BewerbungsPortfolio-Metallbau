@@ -8,7 +8,7 @@ export async function sendContactEmail(payload: ContactFormData): Promise<void> 
     {
       from_name: payload.from_name,
       from_email: payload.from_email,
-      subject: payload.subject,
+      subject: `[Metallbau-Portfolio] ${payload.subject}`,
       message: payload.message,
     },
     import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
