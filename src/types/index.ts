@@ -20,7 +20,7 @@ export interface Project {
 
 export interface Skill {
   name: string
-  category: 'frontend' | 'backend' | 'devops' | 'tools'
+  category: 'metallbau' | 'frontend' | 'backend' | 'devops' | 'tools'
 }
 
 export interface TimelineEntry {

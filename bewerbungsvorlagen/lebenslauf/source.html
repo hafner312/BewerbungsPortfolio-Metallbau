@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Lebenslauf – Patrik Hafner</title>
+<style>
+  /* Schriften der Portfolio-Website, damit das PDF erkennbar dazugehoert.
+     Liegen als Kopie in assets/fonts, damit die Vorlage ohne node_modules baut. */
+  @font-face { font-family: 'Inter'; font-weight: 400; font-style: normal;
+    src: url('assets/fonts/inter-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 600; font-style: normal;
+    src: url('assets/fonts/inter-latin-600-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 700; font-style: normal;
+    src: url('assets/fonts/inter-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Space Grotesk'; font-weight: 700; font-style: normal;
+    src: url('assets/fonts/space-grotesk-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 500; font-style: normal;
+    src: url('assets/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --gruen: #0c2b29;      /* Kopfbereich, wie Navigation und Footer der Website */
+    --akzent: #0d9488;
+    --akzent-hell: #5eead4;
+    --mint: #e9f4f2;
+    --text: #0f172a;
+    --text2: #334155;
+    --muted: #64748b;
+    --linie: rgba(15, 23, 42, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    font-size: 9pt;
+    line-height: 1.35;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .seite {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .seite + .seite { page-break-before: always; }
+
+  /* ---------------- Kopfbereich ---------------- */
+  .kopf {
+    background: linear-gradient(135deg, #0f3a36 0%, var(--gruen) 55%, #08211f 100%);
+    color: #fff;
+    padding: 8mm 13mm 7mm;
+    display: flex;
+    align-items: center;
+    gap: 7mm;
+    position: relative;
+  }
+  /* dezenter Farbschimmer wie im Kopfbereich der Website */
+  .kopf::after {
+    content: '';
+    position: absolute;
+    right: -30mm; top: -30mm;
+    width: 90mm; height: 90mm;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,212,191,0.30) 0%, transparent 68%);
+  }
+  .kopf > * { position: relative; z-index: 1; }
+
+  .foto {
+    width: 23mm; height: 23mm;
+    border-radius: 8mm;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid rgba(255,255,255,0.28);
+    flex-shrink: 0;
+  }
+
+  .dokumentart {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--akzent-hell);
+    opacity: 0.85;
+    margin-bottom: 1.5mm;
+  }
+  .kopf-name {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 21pt;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .kopf-rolle {
+    color: var(--akzent-hell);
+    font-size: 9.5pt;
+    font-weight: 600;
+    margin-top: 1.2mm;
+  }
+  .kopf-zeile {
+    margin-top: 3mm;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2mm 4.5mm;
+    font-size: 8.1pt;
+    color: rgba(255,255,255,0.86);
+  }
+  .kopf-zeile span { white-space: nowrap; }
+  /* Verknuepfungen bleiben im PDF anklickbar - dezent unterstrichen,
+     damit man sie als Link erkennt */
+  .kopf-zeile a {
+    color: var(--akzent-hell);
+    text-decoration: underline;
+    text-underline-offset: 1.6px;
+  }
+  .kopf-zeile b { color: #fff; font-weight: 600; }
+
+  /* ---------------- Kurzprofil ---------------- */
+  .profil {
+    background: var(--mint);
+    padding: 4mm 13mm;
+    border-bottom: 1px solid var(--linie);
+    font-size: 8.7pt;
+    color: var(--text2);
+  }
+  .profil b { color: var(--text); font-weight: 600; }
+
+  /* ---------------- Spalten ---------------- */
+  .koerper {
+    display: grid;
+    grid-template-columns: 1fr 58mm;
+    gap: 8mm;
+    padding: 5.5mm 13mm 9mm;
+  }
+
+  h2 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 10.2pt;
+    color: var(--text);
+    margin: 0 0 2.4mm;
+    padding-bottom: 1mm;
+    border-bottom: 2px solid var(--akzent);
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+  }
+  h2 .punkt {
+    width: 2.4mm; height: 2.4mm;
+    border-radius: 50%;
+    background: var(--akzent);
+    flex-shrink: 0;
+  }
+  section + section { margin-top: 4mm; }
+
+  /* ---------------- Zeitstrahl ---------------- */
+  .strahl { position: relative; padding-left: 7mm; }
+  .strahl::before {
+    content: '';
+    position: absolute;
+    left: 1.6mm; top: 1.5mm; bottom: 1.5mm;
+    width: 1px;
+    background: rgba(13, 148, 136, 0.35);
+  }
+  .posten { position: relative; margin-bottom: 2.6mm; page-break-inside: avoid; }
+  .posten:last-child { margin-bottom: 0; }
+  .posten::before {
+    content: '';
+    position: absolute;
+    left: -6.6mm; top: 1.4mm;
+    width: 2.6mm; height: 2.6mm;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.6px solid var(--akzent);
+  }
+  .datum {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7.6pt;
+    font-weight: 500;
+    color: var(--akzent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .posten h3 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: 9.4pt;
+    margin: 0.5mm 0 0.3mm;
+    color: var(--text);
+  }
+  .firma { font-size: 8.2pt; color: var(--muted); margin-bottom: 1mm; }
+  .firma b { color: var(--text2); font-weight: 600; }
+  .posten ul { margin: 0; padding: 0; list-style: none; }
+  .posten li {
+    font-size: 8.2pt;
+    color: var(--text2);
+    padding-left: 3.2mm;
+    position: relative;
+    margin-bottom: 0.5mm;
+  }
+  .posten li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 1.5mm;
+    width: 1.4mm; height: 1.4mm;
+    border-radius: 50%;
+    background: var(--akzent-hell);
+  }
+
+  /* ---------------- Seitenspalte ---------------- */
+  .block { margin-bottom: 4mm; page-break-inside: avoid; }
+  .block:last-child { margin-bottom: 0; }
+  .block h2 { font-size: 9.4pt; }
+
+  .daten { display: grid; gap: 1.8mm; }
+  .daten .zeile { font-size: 8.6pt; }
+  .daten .bez {
+    font-size: 7.2pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--akzent);
+    display: block;
+  }
+  .daten .wert { color: var(--text2); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 1.4mm; }
+  .chip {
+    background: var(--mint);
+    border: 1px solid rgba(13, 148, 136, 0.22);
+    color: var(--text2);
+    border-radius: 2mm;
+    padding: 0.9mm 2.2mm;
+    font-size: 8.1pt;
+    font-weight: 600;
+  }
+
+  .staerken { margin: 0; padding: 0; list-style: none; }
+  .staerken li {
+    font-size: 8.4pt;
+    color: var(--text2);
+    padding-left: 3.2mm;
+    position: relative;
+    margin-bottom: 0.7mm;
+  }
+  .staerken li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 1.5mm;
+    width: 1.4mm; height: 1.4mm;
+    border-radius: 50%;
+    background: var(--akzent);
+  }
+
+  .referenz { margin-bottom: 2.6mm; }
+  .referenz:last-child { margin-bottom: 0; }
+  .referenz .name { font-weight: 700; font-size: 8.9pt; color: var(--text); }
+  .referenz .rolle { font-size: 8.1pt; color: var(--muted); line-height: 1.35; }
+  .referenz .tel { font-family: 'JetBrains Mono', monospace; font-size: 8.1pt; color: var(--akzent); }
+
+  .fuss {
+    position: absolute;
+    left: 14mm; right: 14mm; bottom: 8mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.4pt;
+    color: var(--muted);
+    border-top: 1px solid var(--linie);
+    padding-top: 2.4mm;
+  }
+  .fuss .mono { font-family: 'JetBrains Mono', monospace; }
+  .fuss a { color: var(--akzent); text-decoration: underline; text-underline-offset: 1.6px; }
+</style>
+</head>
+<body>
+
+<!-- ================================ SEITE 1 ================================ -->
+<div class="seite">
+
+  <header class="kopf">
+    <img class="foto" src="assets/photo.jpg" alt="Patrik Hafner">
+    <div>
+      <div class="dokumentart">Lebenslauf</div>
+      <div class="kopf-name">Patrik Hafner</div>
+      <div class="kopf-rolle">Metallbauer EFZ</div>
+      <div class="kopf-zeile">
+        <span><b>E-Mail</b> <a href="mailto:hafner312@gmail.com">hafner312@gmail.com</a></span>
+        <span><b>Telefon</b> +41 79 501 26 53</span>
+        <span><b>Ort</b> 6460 Altdorf UR</span>
+        <span><b>Portfolio-Website</b> <a href="https://hafner312.github.io/BewerbungsPortfolio-Metallbau/">hafner312.github.io/BewerbungsPortfolio-Metallbau</a></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="profil">
+    <b>Kurzprofil.</b> Gelernter Metallbauer EFZ mit über zehn Jahren Berufserfahrung in
+    Montage, Fertigung und Schweisstechnik. Präzises Arbeiten nach technischen Zeichnungen,
+    Zuverlässigkeit und Qualitätsbewusstsein zeichnen meine Arbeit aus. Zusätzlich habe ich
+    eine Ausbildung zum Applikationsentwickler EFZ absolviert.
+  </div>
+
+  <div class="koerper">
+    <!-- ---------------- Hauptspalte ---------------- -->
+    <main>
+      <section>
+        <h2><span class="punkt"></span>Beruflicher Werdegang</h2>
+        <div class="strahl">
+
+          <div class="posten">
+            <div class="datum">2025 – Juli 2026</div>
+            <h3>Praktikum Applikationsentwickler EFZ</h3>
+            <div class="firma"><b>Holiday Home AG</b> · Steinhausen</div>
+            <ul>
+              <li>Betrieblich organisiertes Praktikum im 2. Ausbildungsjahr zum Applikationsentwickler EFZ vollständig absolviert (Zusatzqualifikation)</li>
+              <li>Mitgearbeitet in der IT-Abteilung</li>
+            </ul>
+          </div>
+
+          <div class="posten">
+            <div class="datum">2024 – 2025</div>
+            <h3>Ausbildung als Informatiker / Applikationsentwickler</h3>
+            <div class="firma"><b>WISS Zürich</b> · Altstetten</div>
+            <ul>
+              <li>Schulisch organisiertes 1. Ausbildungsjahr zum Applikationsentwickler EFZ (Zusatzqualifikation)</li>
+              <li>Schwerpunkte: Softwareentwicklung, Webentwicklung, Datenbanken, mobile Entwicklung (Android/Java)</li>
+            </ul>
+          </div>
+
+          <div class="posten">
+            <div class="datum">2023</div>
+            <h3>Metallbauer</h3>
+            <div class="firma"><b>Strebel AG</b> · Ennetbürgen</div>
+            <ul>
+              <li>Durchführung von Montagearbeiten und präzisen Fertigungsaufgaben nach technischen Zeichnungen</li>
+              <li>Umsetzung von Projekten mit hohem Qualitätsanspruch</li>
+            </ul>
+          </div>
+
+          <div class="posten">
+            <div class="datum">2022 – 2023</div>
+            <h3>Metallbauer</h3>
+            <div class="firma"><b>ATP Hydraulik AG</b> · Küssnacht am Rigi</div>
+            <ul>
+              <li>Effiziente Problemlösung und Anpassung an spezifische Kundenanforderungen</li>
+              <li>Verantwortung für die Einhaltung strenger Qualitäts- und Terminvorgaben</li>
+            </ul>
+          </div>
+
+          <div class="posten">
+            <div class="datum">2015 – 2022</div>
+            <h3>Verschiedene Einsätze (Metallbau, Logistik, Zivildienst)</h3>
+            <ul>
+              <li>Fortführung der Arbeit im Lehrbetrieb nach Abschluss der Ausbildung mit Fokus auf Montage- und Fertigungsaufgaben</li>
+              <li>Tätigkeit in wechselnden Projekten in der Metallverarbeitung mit Verantwortung für technische Umsetzung und Qualitätskontrolle</li>
+              <li>Flexibilität und Anpassungsfähigkeit in verschiedenen Arbeitsumgebungen und Teams</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="punkt"></span>Ausbildung</h2>
+        <div class="strahl">
+          <div class="posten">
+            <div class="datum">08/2011 – 07/2015</div>
+            <h3>Metallbauer EFZ (Lehre)</h3>
+            <div class="firma"><b>Louis Zurfluh AG</b> · Seedorf</div>
+          </div>
+          <div class="posten">
+            <div class="datum">2024 – 2026</div>
+            <h3>Applikationsentwickler EFZ (Zusatzausbildung)</h3>
+            <div class="firma">
+              Ausbildungsbetrieb: <b>Holiday Home AG</b>, Steinhausen · Schule: <b>WISS Zürich</b>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ---------------- Seitenspalte ---------------- -->
+    <aside>
+      <div class="block">
+        <h2>Persönliche Daten</h2>
+        <div class="daten">
+          <div class="zeile">
+            <span class="bez">Anschrift</span>
+            <span class="wert">Hagenstrasse 41<br>6460 Altdorf UR</span>
+          </div>
+          <div class="zeile">
+            <span class="bez">Geburtsdatum</span>
+            <span class="wert">18.03.1994, Altdorf UR</span>
+          </div>
+          <div class="zeile">
+            <span class="bez">Staatsbürgerschaft</span>
+            <span class="wert">Schweiz</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Metallbau-Kompetenzen</h2>
+        <div class="chips">
+          <span class="chip">Montage</span>
+          <span class="chip">Fertigung</span>
+          <span class="chip">Schweisstechnik</span>
+          <span class="chip">Technisches Zeichnen</span>
+          <span class="chip">Blechbearbeitung</span>
+          <span class="chip">CNC-Maschinen</span>
+          <span class="chip">Qualitätskontrolle</span>
+          <span class="chip">Werkstoffkunde</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>IT-Kenntnisse</h2>
+        <div class="chips">
+          <span class="chip">Java</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+          <span class="chip">MySQL</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Stärken</h2>
+        <ul class="staerken">
+          <li>Präzises und sorgfältiges Arbeiten</li>
+          <li>Teamarbeit und Kommunikationsstärke</li>
+          <li>Eigeninitiative und Zuverlässigkeit</li>
+          <li>Analytisches Denken und Problemlösung</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <h2>Referenzen</h2>
+        <div style="font-size: 8.6pt; color: var(--text2);">
+          Referenzpersonen aus Ausbildung und bisherigen Anstellungen nenne ich
+          Ihnen gerne auf Anfrage.
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Interessen</h2>
+        <div style="font-size: 8.6pt; color: var(--text2);">
+          Musik produzieren und hören, Animes, Wandern und Bewegung, Gaming,
+          Programmieren, Webseiten gestalten, kreative App-Ideen umsetzen, Bücher lesen.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="fuss">
+    <span>Patrik Hafner · Lebenslauf</span>
+    <span>Projekte und Lebenslauf online: <a class="mono" href="https://hafner312.github.io/BewerbungsPortfolio-Metallbau/">hafner312.github.io/BewerbungsPortfolio-Metallbau</a></span>
+  </div>
+
+</div>
+
+</body>
+</html>

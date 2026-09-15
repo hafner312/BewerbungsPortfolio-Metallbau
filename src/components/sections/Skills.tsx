@@ -1,4 +1,4 @@
-import { Layout, Server, Cloud, Wrench } from 'lucide-react'
+import { Hammer, Layout, Server, Cloud, Wrench } from 'lucide-react'
 import { AnimatedSection } from '../ui/AnimatedSection'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Badge } from '../ui/Badge'
@@ -14,6 +14,10 @@ const kategorie: Record<
   Skill['category'],
   { Icon: typeof Layout; von: string; bis: string; ton: string; wash: string; schatten: string }
 > = {
+  metallbau: {
+    Icon: Hammer, von: '#c2410c', bis: '#fb923c', ton: '#c2410c',
+    wash: 'rgba(251,146,60,0.10)', schatten: 'rgba(251,146,60,0.45)',
+  },
   frontend: {
     Icon: Layout, von: '#0891b2', bis: '#22d3ee', ton: '#0e7490',
     wash: 'rgba(34,211,238,0.09)', schatten: 'rgba(34,211,238,0.45)',
@@ -40,7 +44,7 @@ export function Skills() {
       <div className="max-w-6xl mx-auto">
         <SectionHeading
           title="Fähigkeiten"
-          subtitle="Technologien und Werkzeuge, mit denen ich arbeite"
+          subtitle="Metallbau-Kompetenzen und Technologien, mit denen ich arbeite"
         />
 
         <div className="grid md:grid-cols-2 gap-6">

@@ -1,6 +1,16 @@
 import type { Skill } from '../types'
 
 export const skills: Skill[] = [
+  // Metallbau
+  { name: 'Montage', category: 'metallbau' },
+  { name: 'Fertigung', category: 'metallbau' },
+  { name: 'Schweisstechnik', category: 'metallbau' },
+  { name: 'Technisches Zeichnen', category: 'metallbau' },
+  { name: 'Blechbearbeitung', category: 'metallbau' },
+  { name: 'CNC-Maschinen', category: 'metallbau' },
+  { name: 'Qualitätskontrolle', category: 'metallbau' },
+  { name: 'Werkstoffkunde', category: 'metallbau' },
+
   // Frontend
   { name: 'React', category: 'frontend' },
   { name: 'TypeScript', category: 'frontend' },
@@ -46,6 +56,7 @@ export const skills: Skill[] = [
 ]
 
 export const categoryLabels: Record<Skill['category'], string> = {
+  metallbau: 'Metallbau',
   frontend: 'Frontend',
   backend: 'Backend',
   devops: 'DevOps & Cloud',
