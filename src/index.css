@@ -1,0 +1,323 @@
+@import 'tailwindcss';
+
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+:root {
+  --color-bg-base: #e7f3f1;
+  --color-bg-surface: #ffffff;
+  --color-bg-elevated: #eef4f7;
+  /* Eigene Kartenfarbe: muss sich sowohl vom weissen als auch vom
+     mintfarbenen Abschnittshintergrund abheben - darum etwas tiefer als
+     beide. Frueher nutzten Karten und Abschnitte dieselbe Variable,
+     dadurch standen weisse Karten auf weissem Grund. */
+  --color-bg-card: #e2f0ec;
+  --color-bg-card-hover: #ecf7f4;
+  --color-accent: #0d9488;
+  --color-accent-light: #0f766e;
+  --color-accent-cyan: #0891b2;
+  --color-accent-glow: rgba(13, 148, 136, 0.1);
+  --color-accent-2: #f59e0b;
+  --color-accent-green: #f59e0b;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-border: rgba(15, 23, 42, 0.1);
+  --color-success: #10b981;
+  --color-error: #dc2626;
+
+  /* Dunkler Rahmen fuer Navigation und Footer - aus der Akzentfarbe
+     abgeleitetes Tannengruen, damit beides als Einheit wirkt. */
+  --color-frame: #0c2b29;
+  --color-frame-soft: #123b38;
+  --color-frame-text: #d3e5e1;
+  --color-frame-muted: #93b3ad;
+  --color-frame-border: rgba(255, 255, 255, 0.12);
+  --color-frame-accent: #5eead4;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 2px 6px rgba(15, 23, 42, 0.06), 0 18px 40px rgba(13, 148, 136, 0.18);
+}
+
+/* Kein eigener *-Reset: Tailwinds Preflight (layer base) übernimmt das.
+   Ein ungelayerter Reset würde alle gelayerten Utilities überstimmen. */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchor targets stop below the fixed navbar instead of sliding under it */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Keyboard focus clearly visible, mouse clicks stay clean */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 3px;
+}
+
+/* Shadow utility for light mode cards */
+.card-shadow {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+/* Unified modern card: soft rest state, lifted accent state on hover */
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(13, 148, 136, 0.35);
+}
+
+/* Projektkarten: kuehler, neutraler Grauton mit feinem Verlauf. Bewusst
+   nicht mintfarben - dieses Mint ist bereits der Hintergrund des
+   Faehigkeiten-Bereichs. Neutral laesst ausserdem die Projektbilder und
+   die farbigen Schaltflaechen wirken. */
+.card-project {
+  background: linear-gradient(180deg, #f8fafc 0%, #e6edf4 100%);
+  border-color: rgba(30, 58, 80, 0.16);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.05),
+    0 8px 22px rgba(30, 58, 80, 0.09);
+}
+.card-project:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #edf3f9 100%);
+  border-color: rgba(13, 148, 136, 0.42);
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.06),
+    0 20px 44px rgba(30, 58, 80, 0.2);
+}
+
+/* Geraete ohne Mauszeiger (Smartphone, Tablet) kennen kein :hover - dort
+   waere der Live-Demo-Knopf sonst nie sichtbar. */
+@media (hover: none) {
+  .demo-einblendung {
+    opacity: 1;
+  }
+}
+
+/* Gradient headline text (keeps dark tone for contrast, teal sheen at the end) */
+.gradient-text {
+  background: linear-gradient(115deg, var(--color-text-primary) 0%, #134e4a 55%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Slow drift for hero blobs */
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(24px, -18px) scale(1.06); }
+  66% { transform: translate(-16px, 14px) scale(0.97); }
+}
+.blob-drift {
+  animation: blob-drift 16s ease-in-out infinite;
+}
+.blob-drift-slow {
+  animation: blob-drift 22s ease-in-out infinite reverse;
+}
+
+/* ------------------------------------------------------------------
+   Aurora: langsam wanderndes Farbverlaufs-Feld hinter dem Hero.
+   Erzeugt Tiefe, ohne vom Text abzulenken.
+   ------------------------------------------------------------------ */
+@keyframes aurora-shift {
+  0%   { transform: translate3d(-6%, -4%, 0) rotate(0deg)   scale(1.05); }
+  25%  { transform: translate3d( 5%, -7%, 0) rotate(4deg)   scale(1.12); }
+  50%  { transform: translate3d( 7%,  5%, 0) rotate(-3deg)  scale(1.04); }
+  75%  { transform: translate3d(-4%,  6%, 0) rotate(2deg)   scale(1.10); }
+  100% { transform: translate3d(-6%, -4%, 0) rotate(0deg)   scale(1.05); }
+}
+
+.aurora {
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  filter: blur(90px);
+  opacity: 0.9;
+  background:
+    radial-gradient(38% 44% at 16% 22%, rgba(20, 184, 166, 0.85) 0%, transparent 62%),
+    radial-gradient(34% 40% at 84% 18%, rgba(56, 189, 248, 0.65) 0%, transparent 64%),
+    radial-gradient(40% 44% at 74% 78%, rgba(129, 140, 248, 0.5) 0%, transparent 66%),
+    radial-gradient(36% 42% at 24% 82%, rgba(45, 212, 191, 0.55) 0%, transparent 64%);
+  animation: aurora-shift 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.aurora-2 {
+  animation-duration: 38s;
+  animation-direction: reverse;
+  opacity: 0.55;
+  filter: blur(120px);
+  background:
+    radial-gradient(42% 48% at 68% 26%, rgba(251, 191, 36, 0.34) 0%, transparent 66%),
+    radial-gradient(38% 44% at 28% 68%, rgba(34, 211, 238, 0.42) 0%, transparent 64%);
+}
+
+/* Heller Schriftzug fuer den dunklen Kopfbereich */
+.shine-text-light {
+  background-image: linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #a7f3e4 34%,
+    #67e8f9 46%,
+    #ffffff 52%,
+    #67e8f9 58%,
+    #a7f3e4 70%,
+    #ffffff 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shine-sweep 7s ease-in-out 1.2s infinite;
+}
+
+/* Feine Körnung – nimmt Farbverläufen das Banding und wirkt hochwertiger */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Dünne Lichtkante am oberen Kartenrand – lässt Karten "gläsern" wirken */
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), transparent 38%);
+  opacity: 0.7;
+}
+
+/* Text, der beim Erscheinen von unten "aufsteigt" (Hero-Zeilen) */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise-in {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Laufender Glanz über dem Namen */
+@keyframes shine-sweep {
+  0%   { background-position: -180% 0; }
+  60%  { background-position: 180% 0; }
+  100% { background-position: 180% 0; }
+}
+
+.shine-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-text-primary) 0%,
+    #134e4a 38%,
+    var(--color-accent) 48%,
+    #5eead4 52%,
+    var(--color-accent) 56%,
+    #134e4a 66%,
+    var(--color-text-primary) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shine-sweep 7s ease-in-out 1.2s infinite;
+}
+
+/* Umlaufende Akzentlinie für hervorgehobene Karten */
+@keyframes border-pulse {
+  0%, 100% { box-shadow: 0 6px 26px rgba(13, 148, 136, 0.18); }
+  50%      { box-shadow: 0 8px 34px rgba(13, 148, 136, 0.34); }
+}
+.pulse-ring { animation: border-pulse 4.5s ease-in-out infinite; }
