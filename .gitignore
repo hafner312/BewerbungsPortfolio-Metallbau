@@ -21,6 +21,10 @@ dist-ssr/
 /bewerbungsvorlagen/lebenslauf/source-versand.html
 /bewerbungsvorlagen/lebenslauf/lebenslauf-versand.pdf
 
+# Arbeitszeugnisse enthalten Namen und Unterschriften der Unterzeichnenden.
+# Sie gehoeren in die Bewerbung, nicht auf die oeffentliche Website.
+/unterlagen-privat/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json
