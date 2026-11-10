@@ -25,6 +25,11 @@ dist-ssr/
 # Sie gehoeren in die Bewerbung, nicht auf die oeffentliche Website.
 /unterlagen-privat/
 
+# Persoenliche, firmenspezifische Bewerbungen - nur lokal, nie ins oeffentliche
+# Repo pushen.
+/bewerbungen/
+/bewerbungsvorlagen/anschreiben/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json
